@@ -1,6 +1,6 @@
-CREATE DATABASE food_donation_db;
+CREATE DATABASE doacao_comida;
 
-USE food_donation_db;
+USE doacao_comida;
 
 CREATE TABLE pessoa_fisica (
     id INT AUTO_INCREMENT PRIMARY KEY,
