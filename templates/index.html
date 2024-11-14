@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Donation App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+<body>
+    <div class="container">
+        <h1>Bem-vindo ao (nome a deciddir)</h1>
+        <p>Faça login ou escolha uma opção de cadastro abaixo:</p>
+
+        <div class="buttons">
+            <a href="{{ url_for('pessoa_fisica') }}" class="btn">Cadastro Pessoa Física</a>
+            <a href="{{ url_for('restaurante') }}" class="btn">Cadastro Restaurante</a>
+            <a href="{{ url_for('ong') }}" class="btn">Cadastro ONG</a>
+        </div>
+
+        <p>Já possui uma conta?</p>
+        <a href="/login" class="login-btn">Login</a>
+    </div>
+</body>
+</html>

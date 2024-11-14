@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Restaurante</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div>
+        <h1>Cadastro de Restaurante</h1>
+            <form method="POST">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" required><br><br>
+                
+                <label for="cnpj">CNPJ:</label>
+                <input type="text" id="cnpj" name="cnpj" required><br><br>
+
+                <label for="endereco">Endereço:</label>
+                <input type="text" id="endereco" name="endereco" required><br><br>
+
+                <label for="telefone">Telefone:</label>
+                <input type="text" id="telefone" name="telefone" required><br><br>
+
+                <button type="submit">Cadastrar</button>
+            </form>
+
+            <a href="/" class="button back-button">Voltar</a>"
+    </div>
+</body>
+</html>
