@@ -1,8 +1,8 @@
-from flask import Flask, render_template, request, redirect, flash, url_for
+from flask import Flask, render_template, request, redirect, flash, url_for, session
 from flask_mysqldb import MySQL
 
 app = Flask(__name__)
-app.secret_key = 'sua_chave_secreta'
+app.secret_key = 'sala12345'
 
 # Configuração do banco de dados
 app.config['MYSQL_HOST'] = 'localhost'
@@ -24,12 +24,17 @@ def login():
         email = request.form['email']
         senha = request.form['senha']
 
+        # Configura o cursor para retornar resultados como dicionários
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM usuarios WHERE email = %s AND senha = %s", (email, senha))
         usuario = cur.fetchone()
         cur.close()
 
         if usuario:
+            session['tipo'] = usuario[3]  # Supondo que a coluna tipo seja a quarta na tabela
+            session['nome'] = usuario[1]  # Supondo que a coluna nome seja a segunda
+            session['email'] = usuario[2]  # Supondo que a coluna email seja a terceira
+            
             flash('Login realizado com sucesso!', 'success')
             return redirect('/area_restrita')
         else:
@@ -37,6 +42,13 @@ def login():
             return render_template('login.html')
 
     return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    session.clear()  # Limpa todos os dados da sessão
+    return redirect('/')
+
+
 
 # Área restrita para gerenciamento de doações
 @app.route('/area_restrita')
@@ -111,23 +123,34 @@ def ong():
 # Rota para adicionar doações
 @app.route('/doar', methods=['GET', 'POST'])
 def doar():
-    if request.method == 'POST':
-        tipo = request.form['tipo']
-        descricao = request.form['descricao']
-        data = request.form['data']
-        hora = request.form['hora']
-        localizacao = request.form['localizacao']
-
-        cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO doacoes (tipo, descricao, data, hora, localizacao) VALUES (%s, %s, %s, %s, %s)",
-                    (tipo, descricao, data, hora, localizacao))
-        mysql.connection.commit()
-        cur.close()
-
-        flash('Doação registrada com sucesso!', 'success')
+    # Verifique se o usuário está logado e se o tipo é permitido
+    if 'tipo' not in session or session['tipo'] not in ['admin', 'restaurante']:
+        flash('Você não tem permissão para acessar esta página.', 'danger')
         return redirect('/area_restrita')
 
+    if request.method == 'POST':
+        alimento = request.form['alimento']
+        quantidade = request.form['quantidade']
+        descricao = request.form['descricao']
+
+        try:
+            cur = mysql.connection.cursor()
+            cur.execute(
+                "INSERT INTO doacoes (alimento, quantidade, descricao, usuario_id) VALUES (%s, %s, %s, %s)",
+                (alimento, quantidade, descricao, session.get('usuario_id'))
+            )
+            mysql.connection.commit()
+            cur.close()
+
+            flash('Doação cadastrada com sucesso!', 'success')
+            return redirect('/area_restrita')
+        except Exception as e:
+            flash(f'Erro ao cadastrar doação: {str(e)}', 'danger')
+            return render_template('doar.html')
+
     return render_template('doar.html')
+
+
 
 # Rota para notificar pessoas sobre doações
 @app.route('/notificar', methods=['POST'])

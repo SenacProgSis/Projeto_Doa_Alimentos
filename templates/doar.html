@@ -1,52 +1,67 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Doação</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Doar Alimentos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <div class="container">
-        <h1>Cadastro de Doação</h1>
+    <header>
+        <h1>Cadastro de Doações</h1>
+        <nav>
+            <a href="{{ url_for('index') }}">Página Inicial</a>
+            <a href="{{ url_for('logout') }}">Sair</a>
+        </nav>
+    </header>
 
-        <!-- Verificação de permissão -->
-        {% if session['tipo'] == 'admin' or session['tipo'] == 'usuario' %}
-            <form action="{{ url_for('doar') }}" method="POST">
-                <div class="form-group">
-                    <label for="tipo">Tipo de Doação:</label>
-                    <select name="tipo" id="tipo" class="form-control" required>
-                        <option value="comida">Comida</option>
-                        <option value="roupas">Roupas</option>
-                        <option value="outros">Outros</option>
-                    </select>
-                </div>
+    <main>
+        <section>
+            {% if session['tipo'] == 'admin' or session['tipo'] == 'restaurante' %}
+                <p>Bem-vindo, {{ session['tipo'] }}! Você tem permissão para cadastrar doações.</p>
 
-                <div class="form-group">
-                    <label for="descricao">Descrição:</label>
-                    <textarea name="descricao" id="descricao" class="form-control" required></textarea>
-                </div>
+                <form action="{{ url_for('doar') }}" method="POST">
+                    <div>
+                        <label for="tipo">Tipo de Doação:</label>
+                        <select name="tipo" id="tipo" required>
+                            <option value="Alimento">Alimento</option>
+                            <option value="Bebida">Bebida</option>
+                            <option value="Outros">Outros</option>
+                        </select>
+                    </div>
 
-                <div class="form-group">
-                    <label for="data">Data da Doação:</label>
-                    <input type="date" name="data" id="data" class="form-control" required>
-                </div>
+                    <div>
+                        <label for="descricao">Descrição:</label>
+                        <textarea name="descricao" id="descricao" rows="3" required></textarea>
+                    </div>
 
-                <div class="form-group">
-                    <label for="hora">Hora da Doação:</label>
-                    <input type="time" name="hora" id="hora" class="form-control" required>
-                </div>
+                    <div>
+                        <label for="data">Data da Doação:</label>
+                        <input type="date" name="data" id="data" required>
+                    </div>
 
-                <div class="form-group">
-                    <label for="localizacao">Localização:</label>
-                    <input type="text" name="localizacao" id="localizacao" class="form-control" required>
-                </div>
+                    <div>
+                        <label for="hora">Hora da Doação:</label>
+                        <input type="time" name="hora" id="hora" required>
+                    </div>
 
-                <button type="submit" class="btn btn-primary">Cadastrar Doação</button>
-            </form>
-        {% else %}
-            <p>Você não tem permissão para cadastrar doações.</p>
-        {% endif %}
-    </div>
+                    <div>
+                        <label for="localizacao">Localização:</label>
+                        <input type="text" name="localizacao" id="localizacao" required>
+                    </div>
+
+                    <div>
+                        <button type="submit">Cadastrar Doação</button>
+                    </div>
+                </form>
+            {% else %}
+                <p class="error">Você não tem permissão para cadastrar doações. Por favor, entre em contato com o administrador.</p>
+            {% endif %}
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; {{ year }} Doação de Alimentos. Todos os direitos reservados.</p>
+    </footer>
 </body>
 </html>
