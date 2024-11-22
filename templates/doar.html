@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Doação</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Cadastro de Doação</h1>
+
+        <!-- Verificação de permissão -->
+        {% if session['tipo'] == 'admin' or session['tipo'] == 'usuario' %}
+            <form action="{{ url_for('doar') }}" method="POST">
+                <div class="form-group">
+                    <label for="tipo">Tipo de Doação:</label>
+                    <select name="tipo" id="tipo" class="form-control" required>
+                        <option value="comida">Comida</option>
+                        <option value="roupas">Roupas</option>
+                        <option value="outros">Outros</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="descricao">Descrição:</label>
+                    <textarea name="descricao" id="descricao" class="form-control" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="data">Data da Doação:</label>
+                    <input type="date" name="data" id="data" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="hora">Hora da Doação:</label>
+                    <input type="time" name="hora" id="hora" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="localizacao">Localização:</label>
+                    <input type="text" name="localizacao" id="localizacao" class="form-control" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Cadastrar Doação</button>
+            </form>
+        {% else %}
+            <p>Você não tem permissão para cadastrar doações.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
