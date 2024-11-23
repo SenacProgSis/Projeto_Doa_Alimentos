@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doar Alimentos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Cadastro de Doações</h1>
+        <nav>
+            <a href="{{ url_for('index') }}">Página Inicial</a>
+            <a href="{{ url_for('logout') }}">Sair</a>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            {% if session['tipo'] == 'admin' or session['tipo'] == 'restaurante' %}
+                <p>Bem-vindo, {{ session['tipo'] }}! Você tem permissão para cadastrar doações.</p>
+
+                <form action="{{ url_for('doar') }}" method="POST">
+                    <div>
+                        <label for="tipo">Tipo de Doação:</label>
+                        <select name="tipo" id="tipo" required>
+                            <option value="Alimento">Alimento</option>
+                            <option value="Bebida">Bebida</option>
+                            <option value="Outros">Outros</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="descricao">Descrição:</label>
+                        <textarea name="descricao" id="descricao" rows="3" required></textarea>
+                    </div>
+
+                    <div>
+                        <label for="data">Data da Doação:</label>
+                        <input type="date" name="data" id="data" required>
+                    </div>
+
+                    <div>
+                        <label for="hora">Hora da Doação:</label>
+                        <input type="time" name="hora" id="hora" required>
+                    </div>
+
+                    <div>
+                        <label for="localizacao">Localização:</label>
+                        <input type="text" name="localizacao" id="localizacao" required>
+                    </div>
+
+                    <div>
+                        <button type="submit">Cadastrar Doação</button>
+                    </div>
+                </form>
+            {% else %}
+                <p class="error">Você não tem permissão para cadastrar doações. Por favor, entre em contato com o administrador.</p>
+            {% endif %}
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; {{ year }} Doação de Alimentos. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>
