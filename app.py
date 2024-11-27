@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, flash, url_for, session
 from flask_mysqldb import MySQL
-
+# Inicio da Aplicação
 app = Flask(__name__)
 app.secret_key = 'sala12345'
 
