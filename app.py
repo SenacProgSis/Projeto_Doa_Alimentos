@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, flash, url_for, session
 from flask_mysqldb import MySQL
-
+# Inicio da Aplicação
 app = Flask(__name__)
 app.secret_key = 'sala12345'
 
@@ -124,7 +124,8 @@ def ong():
 @app.route('/doar', methods=['GET', 'POST'])
 def doar():
     # Verifique se o usuário está logado e se o tipo é permitido
-    if 'tipo' not in session or session['tipo'] not in ['admin', 'restaurante']:
+    #if 'tipo' not in session or session['tipo'] not in ['admin', 'restaurante']:
+    if session['tipo'] == 'admin' or session['tipo'] == 'restaurante':
         flash('Você não tem permissão para acessar esta página.', 'danger')
         return redirect('/area_restrita')
 

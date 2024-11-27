@@ -17,7 +17,7 @@
 
     <main>
         <section>
-            {% if session['tipo'] == 'admin' or session['tipo'] == 'restaurante' %}
+            {% if 'tipo' not in session or session['tipo'] not in ['admin', 'restaurante'] %}
                 <p>Bem-vindo, {{ session['tipo'] }}! Você tem permissão para cadastrar doações.</p>
 
                 <form action="{{ url_for('doar') }}" method="POST">
