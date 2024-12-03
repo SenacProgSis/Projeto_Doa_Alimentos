@@ -31,9 +31,9 @@ def login():
         cur.close()
 
         if usuario:
-            session['tipo'] = usuario[3]  # Supondo que a coluna tipo seja a quarta na tabela
-            session['nome'] = usuario[1]  # Supondo que a coluna nome seja a segunda
-            session['email'] = usuario[2]  # Supondo que a coluna email seja a terceira
+            session['tipo'] = usuario['tipo'] 
+            session['nome'] = usuario['nome']
+            session['email'] = usuario['email']
             
             flash('Login realizado com sucesso!', 'success')
             return redirect('/area_restrita')
@@ -59,38 +59,21 @@ def area_restrita():
     cur.close()
     return render_template('area_restrita.html', doacoes=doacoes)
 
-# Cadastro de pessoa física
-@app.route('/pessoa_fisica', methods=['GET', 'POST'])
-def pessoa_fisica():
-    if request.method == 'POST':
-        nome = request.form['nome']
-        email = request.form['email']
-        telefone = request.form['telefone']
-        localizacao = request.form['localizacao']
-
-        cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO pessoa_fisica (nome, email, telefone, localizacao) VALUES (%s, %s, %s, %s)",
-                    (nome, email, telefone, localizacao))
-        mysql.connection.commit()
-        cur.close()
-
-        flash('Cadastro realizado com sucesso!', 'success')
-        return redirect('/')
-
-    return render_template('pessoa_fisica.html')
-
 # Cadastro de restaurante
 @app.route('/restaurante', methods=['GET', 'POST'])
 def restaurante():
     if request.method == 'POST':
+        email = request.form['email']
+        senha = request.form['senha']
         nome = request.form['nome']
-        cnpj = request.form['cnpj']
+        cnpj = request.form['cpf_cnpj']
         endereco = request.form['endereco']
         telefone = request.form['telefone']
+        tipo = request.form['tipo']  # 'Restaurante' ou 'ONG'
 
         cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO restaurante (nome, cnpj, endereco, telefone) VALUES (%s, %s, %s, %s)",
-                    (nome, cnpj, endereco, telefone))
+        cur.execute("INSERT INTO usuarios (email, senha, nome, endereco, cpf_cnpj, telefone, tipo) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+                    (email, senha, nome, cnpj, endereco, telefone, tipo))
         mysql.connection.commit()
         cur.close()
 
@@ -103,15 +86,18 @@ def restaurante():
 @app.route('/ong', methods=['GET', 'POST'])
 def ong():
     if request.method == 'POST':
-        nome = request.form['nome']
-        cnpj = request.form['cnpj']
-        responsavel = request.form['responsavel']
         email = request.form['email']
+        senha = request.form['senha']
+        nome = request.form['nome']
+        cnpj = request.form['cpf_cnpj']
+        endereco = request.form['endereco']
         telefone = request.form['telefone']
+        tipo = request.form['tipo']  # 'Restaurante' ou 'ONG'
+
 
         cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO ong (nome, cnpj, responsavel, email, telefone) VALUES (%s, %s, %s, %s, %s)",
-                    (nome, cnpj, responsavel, email, telefone))
+        cur.execute("INSERT INTO usuarios (email, senha, nome, endereco, cpf_cnpj, telefone, tipo) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+                    (email, senha, nome, cnpj, endereco, telefone, tipo))
         mysql.connection.commit()
         cur.close()
 
@@ -130,15 +116,15 @@ def doar():
         return redirect('/area_restrita')
 
     if request.method == 'POST':
-        alimento = request.form['alimento']
-        quantidade = request.form['quantidade']
+        tipo = request.form['tipo']
+        localizacao = request.form['localizacao']
         descricao = request.form['descricao']
 
         try:
             cur = mysql.connection.cursor()
             cur.execute(
-                "INSERT INTO doacoes (alimento, quantidade, descricao, usuario_id) VALUES (%s, %s, %s, %s)",
-                (alimento, quantidade, descricao, session.get('usuario_id'))
+                "INSERT INTO doacoes (tipo, descricao, data, hora, localizacao) VALUES (%s, %s, %s, %s)",
+                (tipo, descricao, localizacao, session.get('usuario_id'))
             )
             mysql.connection.commit()
             cur.close()
@@ -157,7 +143,7 @@ def doar():
 @app.route('/notificar', methods=['POST'])
 def notificar():
     cur = mysql.connection.cursor()
-    cur.execute("SELECT email FROM pessoa_fisica")
+    cur.execute("SELECT email FROM usuarios WHERE tipo = 'ong' ")
     emails = cur.fetchall()
     cur.close()
 
