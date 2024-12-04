@@ -63,12 +63,148 @@ def logout():
 # Área restrita para gerenciamento de doações
 @app.route('/area_restrita')
 def area_restrita():
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT tipo, descricao, data_hora, localizacao FROM doacoes")
-    doacoes = cur.fetchall()
-    cur.close()
-    return render_template('area_restrita.html', doacoes=doacoes)
+    # Verifica se o usuário logado é admin
+    if 'tipo' not in session or session['tipo'] != 'admin':
+        flash('Apenas administradores podem acessar esta página.', 'danger')
+        return redirect('/login')
 
+    try:
+        cur = mysql.connection.cursor()
+        # Consulta para listar todas as doações
+        cur.execute("SELECT * FROM doacoes")
+        doacoes = cur.fetchall()
+
+        # Consulta para listar todos os usuários (Restaurantes e ONGs)
+        cur.execute("SELECT * FROM usuarios WHERE tipo != 'admin'")
+        usuarios = cur.fetchall()
+        cur.close()
+
+        # Renderiza a página com os dados de doações e usuários
+        return render_template('area_restrita.html', doacoes=doacoes, usuarios=usuarios)
+    except Exception as e:
+        flash(f'Erro ao carregar os dados: {str(e)}', 'danger')
+        return render_template('area_restrita.html', doacoes=[], usuarios=[])
+
+
+@app.route('/editar_doacao/<int:doacao_id>', methods=['GET', 'POST'])
+def editar_doacao(doacao_id):
+    if 'tipo' not in session or session['tipo'] != 'admin':
+        flash('Apenas administradores podem acessar esta funcionalidade.', 'danger')
+        return redirect('/login')
+
+    if request.method == 'POST':
+        tipo = request.form['tipo']
+        descricao = request.form['descricao']
+        localizacao = request.form['localizacao']
+
+        try:
+            cur = mysql.connection.cursor()
+            cur.execute(
+                "UPDATE doacoes SET tipo = %s, descricao = %s, localizacao = %s WHERE id = %s",
+                (tipo, descricao, localizacao, doacao_id)
+            )
+            mysql.connection.commit()
+            cur.close()
+            flash('Doação editada com sucesso!', 'success')
+            return redirect('/area_restrita')
+        except Exception as e:
+            flash(f'Erro ao editar a doação: {str(e)}', 'danger')
+
+    # Carregar dados da doação para exibir no formulário
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM doacoes WHERE id = %s", (doacao_id,))
+    doacao = cur.fetchone()
+    cur.close()
+    return render_template('editar_doacao.html', doacao=doacao)
+
+
+@app.route('/excluir_doacao/<int:doacao_id>')
+def excluir_doacao(doacao_id):
+    if 'tipo' not in session or session['tipo'] != 'admin':
+        flash('Apenas administradores podem acessar esta funcionalidade.', 'danger')
+        return redirect('/login')
+
+    try:
+        cur = mysql.connection.cursor()
+        cur.execute("DELETE FROM doacoes WHERE id = %s", (doacao_id,))
+        mysql.connection.commit()
+        cur.close()
+        flash('Doação excluída com sucesso!', 'success')
+    except Exception as e:
+        flash(f'Erro ao excluir a doação: {str(e)}', 'danger')
+
+    return redirect('/area_restrita')
+
+
+@app.route('/editar_usuario/<int:usuario_id>', methods=['GET', 'POST'])
+def editar_usuario(usuario_id):
+    if 'tipo' not in session or session['tipo'] != 'admin':
+        flash('Apenas administradores podem acessar esta funcionalidade.', 'danger')
+        return redirect('/login')
+
+    if request.method == 'POST':
+        nome = request.form['nome']
+        email = request.form['email']
+        telefone = request.form['telefone']
+        endereco = request.form['endereco']
+
+        try:
+            cur = mysql.connection.cursor()
+            cur.execute(
+                "UPDATE usuarios SET nome = %s, email = %s, telefone = %s, endereco = %s WHERE id = %s",
+                (nome, email, telefone, endereco, usuario_id)
+            )
+            mysql.connection.commit()
+            cur.close()
+            flash('Usuário editado com sucesso!', 'success')
+            return redirect('/area_restrita')
+        except Exception as e:
+            flash(f'Erro ao editar o usuário: {str(e)}', 'danger')
+
+    # Carregar dados do usuário para exibir no formulário
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM usuarios WHERE id = %s", (usuario_id,))
+    usuario = cur.fetchone()
+    cur.close()
+    return render_template('editar_usuario.html', usuario=usuario)
+
+
+@app.route('/excluir_usuario/<int:usuario_id>')
+def excluir_usuario(usuario_id):
+    if 'tipo' not in session or session['tipo'] != 'admin':
+        flash('Apenas administradores podem acessar esta funcionalidade.', 'danger')
+        return redirect('/login')
+
+    try:
+        cur = mysql.connection.cursor()
+        cur.execute("DELETE FROM usuarios WHERE id = %s", (usuario_id,))
+        mysql.connection.commit()
+        cur.close()
+        flash('Usuário excluído com sucesso!', 'success')
+    except Exception as e:
+        flash(f'Erro ao excluir o usuário: {str(e)}', 'danger')
+
+    return redirect('/area_restrita')
+
+
+@app.route('/enviar_notificacoes', methods=['POST'])
+def enviar_notificacoes():
+    if 'tipo' not in session or session['tipo'] != 'admin':
+        return {'message': 'Apenas administradores podem enviar notificações.'}, 403
+
+    try:
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT email FROM usuarios WHERE tipo = 'ong'")
+        emails = [row[0] for row in cur.fetchall()]
+        cur.close()
+
+        # Simulação de envio de notificações
+        for email in emails:
+            print(f"Notificação enviada para: {email}")
+
+        return {'message': 'Notificações enviadas com sucesso!'}
+    except Exception as e:
+        return {'message': f'Erro ao enviar notificações: {str(e)}'}, 500
 # Cadastro de usuário (Restaurante ou ONG)
 @app.route('/cadastro', methods=['GET', 'POST'])
 def cadastro():
@@ -206,20 +342,7 @@ def ong():
 
 
 
-# Rota para notificar ONGs sobre doações
-@app.route('/notificar', methods=['POST'])
-def notificar():
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT email FROM usuarios WHERE tipo = 'ong'")
-    emails = [email[0] for email in cur.fetchall()]
-    cur.close()
 
-    # Simulação de envio de e-mails
-    for email in emails:
-        print(f"Notificação enviada para: {email}")
-
-    flash('Notificações enviadas com sucesso!', 'success')
-    return redirect('/area_restrita')
 
 if __name__ == '__main__':
     app.run(debug=True)
