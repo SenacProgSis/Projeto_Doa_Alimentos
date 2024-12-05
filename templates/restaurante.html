@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Área do Restaurante</title>
     <!-- Adicione aqui links para estilos CSS ou bibliotecas (opcional) -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+   
 </head>
 <body>
     <header>
@@ -56,6 +56,7 @@
             <table border="1">
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Tipo</th>
                         <th>Descrição</th>
                         <th>Data e Hora</th>
@@ -65,10 +66,15 @@
                 <tbody>
                     {% for doacao in historico_doacoes %}
                     <tr>
+                        <td>{{ doacao.id }}</td>
                         <td>{{ doacao.tipo }}</td>
                         <td>{{ doacao.descricao }}</td>
                         <td>{{ doacao.data_hora }}</td>
                         <td>{{ doacao.localizacao }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5">Nenhuma doação encontrada.</td>
                     </tr>
                     {% endfor %}
                 </tbody>
