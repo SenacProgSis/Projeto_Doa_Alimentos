@@ -41,7 +41,14 @@ CREATE TABLE doacoes (
 -- Tabela de notificações
 CREATE TABLE notificacoes (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    email_destinatario VARCHAR(191) NOT NULL,
+    email_remetente VARCHAR(255) NOT NULL,
     data_envio DATETIME DEFAULT CURRENT_TIMESTAMP,
     mensagem TEXT NOT NULL
 );
+SELECT * FROM usuarios;
+SELECT * FROM doacoes;
+SELECT * FROM notificacoes;
+
+ALTER TABLE notificacoes CHANGE COLUMN email_destinatario email_remetente VARCHAR(255) NOT NULL;
+
+
