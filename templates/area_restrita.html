@@ -4,152 +4,136 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Área Restrita - Administrador</title>
-    <!-- Adicione aqui links para estilos CSS ou bibliotecas -->
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        th, td {
-            padding: 10px;
-            border: 1px solid #ccc;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
+    <link rel="stylesheet" href="/static/css/area_restrita.css">
 </head>
 <body>
     <header>
         <h1>Área Restrita - Administrador</h1>
-        <a href="/logout">Sair</a>
     </header>
 
     <main>
-       <!-- Gerenciamento de Doações -->
-<section>
-    <h2>Gerenciar Doações</h2>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Tipo</th>
-                <th>Descrição</th>
-                <th>Localização</th>
-                <th>Data e Hora</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for doacao in doacoes %}
-            <tr>
-                <td>{{ doacao.id }}</td>
-                <td>{{ doacao.tipo }}</td>
-                <td>{{ doacao.descricao }}</td>
-                <td>{{ doacao.localizacao }}</td>
-                <td>{{ doacao.data_hora }}</td>
-                <td>
-                    <a href="/editar_doacao/{{ doacao.id }}">Editar</a> |
-                    <a href="/excluir_doacao/{{ doacao.id }}" onclick="return confirm('Tem certeza que deseja excluir esta doação?');">Excluir</a>
-                </td>
-            </tr>
-            {% else %}
-            <tr>
-                <td colspan="6">Nenhuma doação cadastrada.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</section>
+        <!-- Gerenciamento de Doações -->
+        <section class="card">
+            <h2>Gerenciar Doações</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tipo</th>
+                        <th>Descrição</th>
+                        <th>Localização</th>
+                        <th>Data e Hora</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for doacao in doacoes %}
+                    <tr>
+                        <td>{{ doacao.id }}</td>
+                        <td>{{ doacao.tipo }}</td>
+                        <td>{{ doacao.descricao }}</td>
+                        <td>{{ doacao.localizacao }}</td>
+                        <td>{{ doacao.data_hora }}</td>
+                        <td>
+                            <a href="/editar_doacao/{{ doacao.id }}" class="btn editar">Editar</a>
+                            <a href="/excluir_doacao/{{ doacao.id }}" class="btn excluir" onclick="return confirm('Tem certeza que deseja excluir esta doação?');">Excluir</a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6">Nenhuma doação cadastrada.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
 
-<hr>
+        <!-- Gerenciamento de Restaurantes e ONGs -->
+        <section class="card">
+            <h2>Gerenciar Restaurantes e ONGs</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Tipo</th>
+                        <th>Telefone</th>
+                        <th>Endereço</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for usuario in usuarios %}
+                    <tr>
+                        <td>{{ usuario.id }}</td>
+                        <td>{{ usuario.nome }}</td>
+                        <td>{{ usuario.email }}</td>
+                        <td>{{ usuario.tipo }}</td>
+                        <td>{{ usuario.telefone }}</td>
+                        <td>{{ usuario.endereco }}</td>
+                        <td>
+                            <a href="/editar_usuario/{{ usuario.id }}" class="btn editar">Editar</a>
+                            <a href="/excluir_usuario/{{ usuario.id }}" class="btn excluir" onclick="return confirm('Tem certeza que deseja excluir este usuário?');">Excluir</a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="7">Nenhum usuário cadastrado.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
 
-<!-- Gerenciamento de Restaurantes e ONGs -->
-<section>
-    <h2>Gerenciar Restaurantes e ONGs</h2>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Tipo</th>
-                <th>Telefone</th>
-                <th>Endereço</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for usuario in usuarios %}
-            <tr>
-                <td>{{ usuario.id }}</td>
-                <td>{{ usuario.nome }}</td>
-                <td>{{ usuario.email }}</td>
-                <td>{{ usuario.tipo }}</td>
-                <td>{{ usuario.telefone }}</td>
-                <td>{{ usuario.endereco }}</td>
-                <td>
-                    <a href="/editar_usuario/{{ usuario.id }}">Editar</a> |
-                    <a href="/excluir_usuario/{{ usuario.id }}" onclick="return confirm('Tem certeza que deseja excluir este usuário?');">Excluir</a>
-                </td>
-            </tr>
-            {% else %}
-            <tr>
-                <td colspan="7">Nenhum usuário cadastrado.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</section>
-
-<!-- Seção de Mensagens -->
-<section>
-    <h2>Mensagens Recebidas</h2>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>E-mail</th>
-                <th>Data de Envio</th>
-                <th>Mensagem</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for mensagem in mensagens %}
-            <tr>
-                <td>{{ mensagem.id }}</td>
-                <td>{{ mensagem.email_remetente }}</td>
-                <td>{{ mensagem.data_envio }}</td>
-                <td>{{ mensagem.mensagem }}</td>
-            </tr>
-            {% else %}
-            <tr>
-                <td colspan="4">Nenhuma mensagem recebida.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</section>
-
-
-
-        <hr>
+        <!-- Mensagens Recebidas -->
+        <section class="card">
+            <h2>Mensagens do Suporte</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Remetente</th>
+                        <th>Data</th>
+                        <th>Mensagem</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for mensagem in mensagens %}
+                    <tr>
+                        <td>{{ mensagem.id }}</td>
+                        <td>{{ mensagem.email_remetente }}</td>
+                        <td>{{ mensagem.data_envio }}</td>
+                        <td>{{ mensagem.mensagem }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4">Nenhuma mensagem recebida.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
 
         <!-- Envio de Notificações -->
-        <section>
+        <section class="card">
             <h2>Enviar Notificações para ONGs</h2>
             <button onclick="enviarNotificacoes()">Enviar Notificações para Todas as ONGs</button>
         </section>
     </main>
-
     <footer>
-        <p>© 2024 Sistema de Doações - Todos os direitos reservados.</p>
+        <div class="footer-content">
+            <div class="logout-container">
+                <a href="/logout" class="btn sair">Sair</a>
+            </div>
+        </div>
+        <div class="footer-bar">
+            <p>© 2024 Sistema de Doações - Todos os direitos reservados.</p>
+        </div>
     </footer>
+    
 
     <script>
-        // Função para enviar notificações (simulação)
         function enviarNotificacoes() {
             if (confirm('Tem certeza que deseja enviar notificações para todas as ONGs?')) {
                 fetch('/enviar_notificacoes', { method: 'POST' })
