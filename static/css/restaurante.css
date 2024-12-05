@@ -1,3 +1,4 @@
+/* Ajustes gerais no body */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -5,6 +6,7 @@ body {
     background-color: #f7f7f7;
 }
 
+/* Estilo para o cabeçalho */
 header {
     background-color: #ff7043;
     color: white;
@@ -12,11 +14,13 @@ header {
     padding: 1rem 0;
 }
 
+/* Contêiner geral */
 .container {
     width: 90%;
     margin: 2rem auto;
 }
 
+/* Layout do grid */
 .grid-layout {
     display: flex;
     flex-direction: column;
@@ -24,6 +28,7 @@ header {
     gap: 20px;
 }
 
+/* Layout das seções principais (topo e fundo) */
 .grid-top {
     display: flex;
     justify-content: space-between;
@@ -31,8 +36,7 @@ header {
     width: 80%;
 }
 
-
-
+/* Layout para o suporte */
 .grid-bottom {
     display: flex;
     justify-content: center;
@@ -40,6 +44,7 @@ header {
     margin-top: 20px;
 }
 
+/* Cartões */
 .card {
     background-color: #fff8e1;
     border-radius: 20px;
@@ -55,11 +60,11 @@ header {
 
 .card-top {
     flex: 1;
-    max-width: 48%; 
+    max-width: 48%;
 }
 
 .card-support {
-    width: 78%; 
+    width: 78%;
 }
 
 .card h2 {
@@ -67,6 +72,7 @@ header {
     color: #333;
 }
 
+/* Estilo de formulários */
 form label {
     display: block;
     margin: 0.5rem 0 0.2rem;
@@ -96,23 +102,47 @@ form .btn:hover {
     background-color: #45a049;
 }
 
+/* Tabela do histórico de doações */
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 1rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 table th, table td {
     border: 1px solid #ddd;
     padding: 0.8rem;
     text-align: left;
+    color: #555;
 }
 
 table th {
     background-color: #ffcc80;
     color: #333;
+    font-weight: bold;
 }
 
+table td {
+    background-color: #f9f9f9;
+}
+
+table tr:nth-child(even) td {
+    background-color: #f1f1f1; /* Alternando fundo das linhas */
+}
+
+table tr:hover td {
+    background-color: #ffeb3b; /* Cor de destaque ao passar o mouse */
+}
+
+table td[colspan="5"] {
+    text-align: center;
+    color: #888;
+}
+
+/* Estilo para o botão de logout */
 .logout-container {
     text-align: center;
     margin: 2rem 0;
@@ -131,26 +161,21 @@ table th {
     background-color: #d32f2f;
 }
 
+/* Rodapé */
 footer {
     text-align: center;
     color: white;
 }
 
 .footer-content {
-    padding: 1rem 0; 
-}
-
-.logout-container {
-    margin-bottom: 1rem; 
+    padding: 1rem 0;
 }
 
 footer .footer-bar {
-    background-color: #ff7043; 
-    padding: 1rem 0; 
+    background-color: #ff7043;
+    padding: 1rem 0;
 }
 
 footer p {
     margin: 0;
 }
-
-
