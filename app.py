@@ -78,13 +78,17 @@ def area_restrita():
         # Consulta para listar todos os usuários (Restaurantes e ONGs)
         cur.execute("SELECT * FROM usuarios WHERE tipo != 'admin'")
         usuarios = cur.fetchall()
+
+        # Consulta para listar as mensagens enviadas ao suporte
+        cur.execute("SELECT email_remetente, mensagem, data_envio FROM notificacoes")
+        mensagens = cur.fetchall()
         cur.close()
 
         # Renderiza a página com os dados de doações e usuários
-        return render_template('area_restrita.html', doacoes=doacoes, usuarios=usuarios)
+        return render_template('area_restrita.html', doacoes=doacoes, usuarios=usuarios, mensagens=mensagens)
     except Exception as e:
         flash(f'Erro ao carregar os dados: {str(e)}', 'danger')
-        return render_template('area_restrita.html', doacoes=[], usuarios=[])
+        return render_template('area_restrita.html', doacoes=[], usuarios=[], mensagens=[])
 
 
 @app.route('/editar_doacao/<int:doacao_id>', methods=['GET', 'POST'])
@@ -276,13 +280,14 @@ def suporte():
         return redirect('/login')
 
     mensagem = request.form['mensagem']
+    remetente_email = session['email']
 
     try:
         cur = mysql.connection.cursor()
         # Envia a mensagem para a tabela de notificações
         cur.execute(
-            "INSERT INTO notificacoes (email_destinatario, mensagem) VALUES (%s, %s)",
-            ('admin@doacao.com', mensagem)  # Envia ao email do administrador
+            "INSERT INTO notificacoes (email_remetente, mensagem) VALUES (%s, %s)",
+            (remetente_email, mensagem) 
         )
         mysql.connection.commit()
         cur.close()

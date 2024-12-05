@@ -104,6 +104,36 @@
     </table>
 </section>
 
+<!-- Seção de Mensagens -->
+<section>
+    <h2>Mensagens Recebidas</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>E-mail</th>
+                <th>Data de Envio</th>
+                <th>Mensagem</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for mensagem in mensagens %}
+            <tr>
+                <td>{{ mensagem.id }}</td>
+                <td>{{ mensagem.email_remetente }}</td>
+                <td>{{ mensagem.data_envio }}</td>
+                <td>{{ mensagem.mensagem }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4">Nenhuma mensagem recebida.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+
+
 
         <hr>
 
