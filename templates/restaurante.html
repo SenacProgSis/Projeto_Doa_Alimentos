@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Área do Restaurante</title>
+    <!-- Adicione aqui links para estilos CSS ou bibliotecas (opcional) -->
+   
     <link rel="stylesheet" href="/static/css/restaurante.css">
 </head>
 <body>
@@ -65,6 +67,48 @@
                     </section>
                 </div>
 
+        <!-- Seção de Suporte -->
+        <section>
+            <h2>Contato com o Suporte</h2>
+            <form action="/suporte" method="POST">
+                <label for="mensagem">Mensagem:</label>
+                <textarea id="mensagem" name="mensagem" placeholder="Explique o problema ou dúvida..." required></textarea><br><br>
+                <button type="submit">Enviar para o Suporte</button>
+            </form>
+        </section>
+
+        <hr>
+
+        <!-- Seção de Histórico de Doações -->
+        <section>
+            <h2>Histórico de Doações</h2>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tipo</th>
+                        <th>Descrição</th>
+                        <th>Data e Hora</th>
+                        <th>Localização</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for doacao in historico_doacoes %}
+                    <tr>
+                        <td>{{ doacao.id }}</td>
+                        <td>{{ doacao.tipo }}</td>
+                        <td>{{ doacao.descricao }}</td>
+                        <td>{{ doacao.data_hora }}</td>
+                        <td>{{ doacao.localizacao }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5">Nenhuma doação encontrada.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
                 <!-- Contato com o Suporte -->
                 <div class="grid-bottom">
                     <section class="card card-support">

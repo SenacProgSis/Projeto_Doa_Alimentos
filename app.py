@@ -15,6 +15,7 @@ app.config['MYSQL_DB'] = 'doacao_comida'
 
 mysql = MySQL(app)
 
+
 # Rota inicial
 @app.route('/')
 def index():
@@ -69,7 +70,7 @@ def area_restrita():
         return redirect('/login')
 
     try:
-        cur = mysql.connection.cursor()
+        cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         # Consulta para listar todas as doações
         cur.execute("SELECT * FROM doacoes")
         doacoes = cur.fetchall()
@@ -111,7 +112,7 @@ def editar_doacao(doacao_id):
             flash(f'Erro ao editar a doação: {str(e)}', 'danger')
 
     # Carregar dados da doação para exibir no formulário
-    cur = mysql.connection.cursor()
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cur.execute("SELECT * FROM doacoes WHERE id = %s", (doacao_id,))
     doacao = cur.fetchone()
     cur.close()
@@ -162,7 +163,7 @@ def editar_usuario(usuario_id):
             flash(f'Erro ao editar o usuário: {str(e)}', 'danger')
 
     # Carregar dados do usuário para exibir no formulário
-    cur = mysql.connection.cursor()
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cur.execute("SELECT * FROM usuarios WHERE id = %s", (usuario_id,))
     usuario = cur.fetchone()
     cur.close()
@@ -192,19 +193,26 @@ def enviar_notificacoes():
     if 'tipo' not in session or session['tipo'] != 'admin':
         return {'message': 'Apenas administradores podem enviar notificações.'}, 403
 
-    try:
+    # try:
         cur = mysql.connection.cursor()
+        # Consulta para obter os e-mails das ONGs
         cur.execute("SELECT email FROM usuarios WHERE tipo = 'ong'")
         emails = [row[0] for row in cur.fetchall()]
         cur.close()
 
-        # Simulação de envio de notificações
-        for email in emails:
-            print(f"Notificação enviada para: {email}")
+        # Envio de e-mails
+         # Configure suas credenciais
+        yag = yagmail.SMTP("seu_email@gmail.com", "sua_senha")
+        # Enviar o e-mail
+        yag.send(to="destinatario@gmail.com",
+                 subject="Teste com Yagmail",
+                 contents="Este é um teste de envio de e-mail usando Yagmail.")
+        return "E-mail enviado com sucesso!"
+    #except Exception as e:
+        return f"Erro ao enviar e-mail: {str(e)}"
 
-        return {'message': 'Notificações enviadas com sucesso!'}
-    except Exception as e:
-        return {'message': f'Erro ao enviar notificações: {str(e)}'}, 500
+    
+
 # Cadastro de usuário (Restaurante ou ONG)
 @app.route('/cadastro', methods=['GET', 'POST'])
 def cadastro():
@@ -227,6 +235,7 @@ def cadastro():
         return redirect('/')
 
     return render_template('cadastro.html')
+
 
 # Rota para adicionar doações
 @app.route('/doar', methods=['GET', 'POST'])
@@ -293,10 +302,10 @@ def restaurante():
         return redirect('/login')
 
     try:
-        cur = mysql.connection.cursor()
+        cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         # Seleciona as doações do restaurante logado
         cur.execute(
-            "SELECT tipo, descricao, data_hora, localizacao FROM doacoes WHERE usuario_id = %s",
+            "SELECT id, tipo, descricao, data_hora, localizacao FROM doacoes WHERE usuario_id = %s",
             (session['usuario_id'],)
         )
         historico_doacoes = cur.fetchall()
@@ -316,7 +325,7 @@ def ong():
         return redirect('/login')
 
     try:
-        cur = mysql.connection.cursor()
+        cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         # Consulta para obter doações e contatos dos restaurantes
         cur.execute("""
             SELECT 
