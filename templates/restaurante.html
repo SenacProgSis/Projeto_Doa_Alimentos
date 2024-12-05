@@ -6,37 +6,66 @@
     <title>Área do Restaurante</title>
     <!-- Adicione aqui links para estilos CSS ou bibliotecas (opcional) -->
    
+    <link rel="stylesheet" href="/static/css/restaurante.css">
 </head>
 <body>
     <header>
         <h1>Área do Restaurante</h1>
-        <p>Bem-vindo, {{ session['nome'] }}</p> <!-- Exibe o nome do restaurante logado -->
-        <a href="/logout">Sair</a>
+        <p>Bem-vindo, {{ session['nome'] }}</p>
     </header>
 
     <main>
-        <!-- Seção de Doação -->
-        <section>
-            <h2>Fazer uma Doação</h2>
-            <form action="/doar" method="POST">
-                <label for="tipo">Tipo de Doação:</label>
-                <select id="tipo" name="tipo" required>
-                    <option value="comida">Comida</option>
-                    <option value="roupas">Roupas</option>
-                    <option value="outros">Outros</option>
-                </select><br><br>
+        <div class="container">
+            <div class="grid-layout">
+                <div class="grid-top">
+                    <!-- Fazer Doação -->
+                    <section class="card card-top">
+                        <h2>Fazer uma Doação</h2>
+                        <form action="/doar" method="POST">
+                            <label for="tipo">Tipo de Doação:</label>
+                            <select id="tipo" name="tipo" required>
+                                <option value="comida">Comida</option>
+                                <option value="roupas">Roupas</option>
+                                <option value="outros">Outros</option>
+                            </select>
 
-                <label for="descricao">Descrição:</label>
-                <textarea id="descricao" name="descricao" placeholder="Descreva os itens da doação..." required></textarea><br><br>
+                            <label for="descricao">Descrição:</label>
+                            <textarea id="descricao" name="descricao" placeholder="Descreva os itens da doação..." required></textarea>
 
-                <label for="localizacao">Localização:</label>
-                <input type="text" id="localizacao" name="localizacao" placeholder="Digite o endereço para retirada" required><br><br>
+                            <label for="localizacao">Localização:</label>
+                            <input type="text" id="localizacao" name="localizacao" placeholder="Digite o endereço para retirada" required>
 
-                <button type="submit">Cadastrar Doação</button>
-            </form>
-        </section>
+                            <button type="submit" class="btn">Cadastrar Doação</button>
+                        </form>
+                    </section>
 
-        <hr>
+                    <!-- Histórico de Doações -->
+                    <section class="card card-top">
+                        <h2>Histórico de Doações</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Tipo</th>
+                                    <th>Descrição</th>
+                                    <th>Data e Hora</th>
+                                    <th>Localização</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tbody>
+                                    {% for doacao in historico_doacoes %}
+                                    <tr>
+                                        <td>{{ doacao.tipo }}</td>
+                                        <td>{{ doacao.descricao }}</td>
+                                        <td>{{ doacao.data_hora }}</td>
+                                        <td>{{ doacao.localizacao }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </tbody>
+                        </table>
+                    </section>
+                </div>
 
         <!-- Seção de Suporte -->
         <section>
@@ -80,10 +109,32 @@
                 </tbody>
             </table>
         </section>
+                <!-- Contato com o Suporte -->
+                <div class="grid-bottom">
+                    <section class="card card-support">
+                        <h2>Contato com o Suporte</h2>
+                        <form action="/suporte" method="POST">
+                            <label for="mensagem">Mensagem:</label>
+                            <textarea id="mensagem" name="mensagem" placeholder="Explique o problema ou dúvida..." required></textarea>
+                            <button type="submit" class="btn">Enviar para o Suporte</button>
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </div>
     </main>
 
+    <!-- Botão de sair -->
     <footer>
-        <p>© 2024 Sistema de Doações - Todos os direitos reservados.</p>
+        <div class="footer-content">
+            <div class="logout-container">
+                <a href="/logout" class="logout-btn">Sair</a>
+            </div>
+        </div>
+        <div class="footer-bar">
+            <p>© 2024 Sistema de Doações - Todos os direitos reservados.</p>
+        </div>
     </footer>
+    
 </body>
 </html>
