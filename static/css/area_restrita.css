@@ -49,7 +49,7 @@ footer .btn.sair:hover {
 
 /* Cards */
 .card {
-    background: white;
+    background: rgb(233, 238, 243);
     padding: 20px;
     margin: 20px auto; /* Centraliza horizontalmente */
     width: 100%;
@@ -69,7 +69,7 @@ footer .btn.sair:hover {
 table {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px auto; /* Centraliza horizontalmente */
+    margin: 20px auto; /* Centraliza horizontalmente */ 
     border: 1px solid #ccc;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
@@ -124,7 +124,7 @@ tr:hover {
 }
 
 button {
-    background-color: #007bff;
+    background-color: #ffcc00;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -135,7 +135,7 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #e6b800;
     transform: scale(1.1);
 }
 
