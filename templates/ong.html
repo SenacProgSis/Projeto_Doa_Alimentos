@@ -4,32 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Área da ONG</title>
-    <!--Adicione aqui links para estilos CSS ou bibliotecas, se necessário -->
-   
-    <style>
-       
-   
-        .contato-container {
-            display: none; /* Esconde a área de contato inicialmente */
-            margin-top: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            background-color: #f9f9f9;
-        }
-    </style>
+    <link rel="stylesheet" href="/static/css/ong.css">
 </head>
 <body>
     <header>
         <h1>Área da ONG</h1>
         <p>Bem-vindo, {{ session['nome'] }}</p> <!-- Exibe o nome da ONG logada -->
-        <a href="/logout">Sair</a>
     </header>
 
     <main>
         <!-- Lista de Doações Disponíveis -->
-        <section>
+        <section class="doacoes">
             <h2>Doações Disponíveis</h2>
-            <table border="1">
+            <table>
                 <thead>
                     <tr>
                         <th>Tipo</th>
@@ -65,18 +52,23 @@
     </main>
 
     <footer>
-        <p>© 2024 Sistema de Doações - Todos os direitos reservados.</p>
+        <div class="footer-content">
+            <div class="logout-container">
+                <a href="/logout" class="btn sair">Sair</a>
+            </div>
+        </div>
+        <div class="footer-bar">
+            <p>© 2024 Sistema de Doações - Todos os direitos reservados.</p>
+        </div>
     </footer>
 
     <script>
-        // Mostra a área de contato com os detalhes do restaurante
         function mostrarContato(email, telefone) {
             document.getElementById('restaurante-email').innerText = email;
             document.getElementById('restaurante-telefone').innerText = telefone;
             document.getElementById('contato-container').style.display = 'block';
         }
 
-        // Esconde a área de contato
         function esconderContato() {
             document.getElementById('contato-container').style.display = 'none';
         }
