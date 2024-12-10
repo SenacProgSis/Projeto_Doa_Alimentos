@@ -1,0 +1,179 @@
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: url('/static/images/fundo.jpg') no-repeat center center fixed; 
+    background-size: cover;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+
+.container {
+    background-color: #ffffff;
+    color: #333;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 400px;
+    animation: fadeIn 1s ease-out;
+    position: relative;
+    overflow: hidden;
+    text-align: center; 
+}
+
+
+h2 {
+    font-size: 2.2rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(to right, #66bb6a, #ff7043);
+    margin: 0.5rem auto 0;
+    border-radius: 5px;
+}
+
+
+.form-group {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+
+.form-group label {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.form-control {
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    padding: 0.9rem;
+    font-size: 1.1rem;
+    width: 90%;
+    max-width: 300px; 
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    text-align: center; 
+}
+
+.form-control:focus {
+    border-color: #66bb6a;
+    box-shadow: 0 0 10px rgba(102, 187, 106, 0.4);
+    outline: none;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between; 
+    gap: 1rem; 
+    margin-top: 1.5rem;
+}
+
+
+.btn-primary {
+    background: #66bb6a;
+    border: none;
+    border-radius: 6px;
+    padding: 1rem 1.5rem;
+    font-size: 1.2rem;
+    color: #fff;
+    cursor: pointer;
+    flex: 1;
+    text-align: center;
+    transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    background: #57a05c;
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+    background: #4d8e53;
+}
+
+.btn-secondary {
+    background: #f44336;
+    border: none;
+    border-radius: 6px;
+    padding: 1rem 1.5rem;
+    font-size: 1.2rem;
+    color: #fff;
+    cursor: pointer;
+    flex: 1;
+    text-align: center;
+    transition: transform 0.2s ease, background 0.3s ease;
+    text-decoration: none; 
+}
+
+.btn-secondary:hover {
+    transform: translateY(-2px);
+    background: #d32f2f;
+}
+
+.btn-secondary:active {
+    transform: translateY(0);
+    background: #b71c1c;
+}
+
+.alert {
+    border-radius: 6px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    animation: slideIn 0.5s ease-out;
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+.alert-success {
+    background: #66bb6a;
+    color: #fff;
+}
+
+.alert-danger {
+    background: #f44336;
+    color: #fff;
+}
+
+.alert-warning {
+    background: #ff9800;
+    color: #fff;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
