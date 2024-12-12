@@ -1,0 +1,137 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fefefe;
+    display: flex;
+    flex-direction: column;
+    height: 100vh; 
+}
+
+header {
+    background-color: #FF7043; 
+    padding: 15px;
+    text-align: center;
+    color: white;
+    position: relative; /
+}
+
+header .btn-sair {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: #d32f2f;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+header .btn-sair:hover {
+    background-color: #b71c1c;
+}
+
+main {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.doacoes {
+    width: 70%; 
+    background-color: #FFF9C4; 
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2); 
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+    margin: 0 auto; 
+}
+
+.doacoes:hover {
+    transform: translateY(-10px); 
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3); 
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background-color: white;
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: left;
+    border-left: 1px solid #ddd; 
+    border-bottom: 1px solid #ddd; 
+}
+
+table th {
+    background-color: #FFCC80;
+    border-top: 1px solid #ddd; 
+}
+
+table tr:hover {
+    background-color: #e0e0e0; 
+}
+
+button {
+    background-color: #4CAF50; 
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.contato-container {
+    display: none;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #FFECB3; 
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    width: 70%;
+}
+
+.contato-container h3 {
+    margin-top: 0;
+}
+
+footer .footer-bar {
+    background-color: #FF7043;
+    padding: 10px 0;
+    text-align: center;
+    color: white;
+    font-size: 14px;
+}
+
+.btn-sair-centralizado {
+    display: block;
+    margin: 20px auto; 
+    background-color: #d32f2f;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-sair-centralizado:hover {
+    background-color: #b71c1c;
+}

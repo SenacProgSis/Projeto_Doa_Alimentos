@@ -1,0 +1,167 @@
+/* Estilo global */
+body {
+    font-family: 'Arial', sans-serif;
+    background: url('/static/images/login.jpeg') no-repeat center center fixed; 
+    background-size: cover;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+/* Container principal */
+div {
+    background-color: #ffffff;
+    color: #333;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    padding: 4rem;
+    width: 90%;
+    max-width: 500px;
+    animation: fadeIn 1s ease-out;
+    position: relative;
+    overflow: hidden;
+    text-align: center; 
+}
+
+h2 {
+    font-size: 2.2rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(to right, #66bb6a, #ff7043);
+    margin: 0.5rem auto 0;
+    border-radius: 5px;
+}
+
+/* Formulário */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.01rem;
+}
+
+label {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+    text-align: left;
+    color: #555;
+}
+
+input, select {
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    padding: 0.8rem;
+    font-size: 1rem;
+    width: 100%;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus, select:focus {
+    border-color: #66bb6a;
+    box-shadow: 0 0 10px rgba(102, 187, 106, 0.4);
+    outline: none;
+}
+
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 1rem; 
+    margin-top: 1.5rem; 
+    background: none; 
+    box-shadow: none; 
+    border: none; 
+    padding: 0; 
+}
+
+button, a.voltar {
+    display: inline-block;
+    padding: 1rem 3rem; 
+    font-size: 1.2rem; 
+    border-radius: 6px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+}
+
+/* Botão "Cadastrar" */
+button {
+    background: #66bb6a;
+    border: none;
+    transition: transform 0.2s ease, background 0.3s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    background: #57a05c;
+}
+
+button:active {
+    transform: translateY(0);
+    background: #4d8e53;
+}
+
+/* Botão "Voltar" */
+a.voltar {
+    background: #d32f2f;
+    transition: transform 0.2s ease, background 0.3s ease;
+}
+
+a.voltar:hover {
+    transform: translateY(-2px);
+    background: #e06037;
+}
+
+a.voltar:active {
+    transform: translateY(0);
+    background: #b71c1c;
+}
+
+/* Mensagens de erro ou sucesso */
+ul {
+    padding: 0;
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+li {
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+li.success {
+    background: #66bb6a;
+    color: #fff;
+}
+
+li.error {
+    background: #f44336;
+    color: #fff;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
