@@ -134,7 +134,7 @@ table tr:nth-child(even) td {
 }
 
 table tr:hover td {
-    background-color: #ffeb3b; /* Cor de destaque ao passar o mouse */
+    background-color: #e0e0e0; /* Cor de destaque ao passar o mouse */
 }
 
 table td[colspan="5"] {
