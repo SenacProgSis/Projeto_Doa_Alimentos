@@ -1,30 +1,49 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doação de Comida</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Doe Alimentos - Solidariedade</title>
+    <link rel="stylesheet" href="/static/css/index.css">
 </head>
 <body>
-    <div class="container mt-5">
-        <h1>Bem-vindo ao Sistema de Doação de Comida</h1>
-        <p><a href="{{ url_for('login') }}" class="btn btn-primary">Login</a></p>
-        <p><a href="{{ url_for('cadastro') }}" class="btn btn-secondary">Cadastro de Usuários</a></p>
-        
-    </div>
-
-    <!-- Flash messages -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        <div class="container mt-3">
-            {% for category, message in messages %}
-                <div class="alert alert-{{ category }}">
-                    {{ message }}
-                </div>
-            {% endfor %}
+    <nav>
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
-    {% endif %}
-    {% endwith %}
+        <ul id="menu">
+            <li><a href="{{ url_for('index') }}">Início</a></li>
+            <li><a href="{{ url_for('login') }}" class="btn-primary">Login</a></li>
+            <li><a href="{{ url_for('cadastro') }}" class="btn-secondary">Cadastro de Usuários</a></li>
+            <li><a href="{{ url_for('sobre') }}" class="btn-tertiary">Sobre</a></li>
+            <li><a href="{{ url_for('contato') }}" class="btn-quaternary">Contatos</a></li>
+        </ul>
+    </nav>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            menu.classList.toggle('active');
+        }
+        </script>
+</body>
+</html>
+
+    <!-- Cabeçalho -->
+    <header>
+        <div class="content">
+            <h1>Bem vindo ao nosso site de doação, doe alimentos e transforme Vidas</h1>
+            <p>A sua doação faz toda a diferença! Contribua com nossa causa e ajude a mesa da familia Ludovicense.</p>       
+        </div>
+    </header>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>&copy; 2024 Doe Alimentos. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

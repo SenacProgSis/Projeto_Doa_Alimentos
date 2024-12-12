@@ -5,7 +5,7 @@ from flask_mysqldb import MySQLdb
 
 # Início da aplicação
 app = Flask(__name__)
-app.secret_key = '485485'
+app.secret_key = '12345'
 
 # Configuração do banco de dados
 app.config['MYSQL_HOST'] = 'localhost'
@@ -20,6 +20,14 @@ mysql = MySQL(app)
 @app.route('/')
 def index():
     return render_template('index.html')
+@app.route('/sobre')
+def sobre():
+    return render_template('sobre.html')   
+
+@app.route('/contato')
+def contato():
+    return render_template('contato.html')  
+
 
 # Rota de login
 @app.route('/login', methods=['GET', 'POST'])

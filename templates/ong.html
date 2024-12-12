@@ -10,6 +10,7 @@
     <header>
         <h1>Área da ONG</h1>
         <p>Bem-vindo, {{ session['nome'] }}</p> <!-- Exibe o nome da ONG logada -->
+
     </header>
 
     <main>
@@ -52,15 +53,12 @@
     </main>
 
     <footer>
-        <div class="footer-content">
-            <div class="logout-container">
-                <a href="/logout" class="btn sair">Sair</a>
-            </div>
-        </div>
+        <button class="btn-sair-centralizado" onclick="window.location.href='/logout'">Sair</button>
         <div class="footer-bar">
             <p>© 2024 Sistema de Doações - Todos os direitos reservados.</p>
         </div>
     </footer>
+    
 
     <script>
         function mostrarContato(email, telefone) {
