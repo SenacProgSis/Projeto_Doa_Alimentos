@@ -1,7 +1,7 @@
 /* Estilo global */
 body {
     font-family: 'Arial', sans-serif;
-    background: url('/static/images/fundo.jpg') no-repeat center center fixed; 
+    background: url('/static/images/login.jpeg') no-repeat center center fixed; 
     background-size: cover;
     color: #fff;
     margin: 0;
